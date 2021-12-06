@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load format_masks %}
+
+{% block content %}
+
+    {% load static %}
+    {% block extrahead %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/portfolioapp.css' %}">
+    {% endblock %}
+
+    <div style="margin: 1rem;">
+
+        <div>
+            <h3 class="portfolioapp_main_title">Portfolio Summary</h3>
+        </div>
+
+        <div style="margin: 1rem;">
+            <table class="portfolioapp_inverted_table">
+                <tr class="portfolioapp_inverted_table_tr">
+                    <th class="portfolioapp_inverted_table_th_td">현재가치</th>
+                    <th class="portfolioapp_inverted_table_th_td">자본이득</th>
+                    <th class="portfolioapp_inverted_table_th_td">자본이득(환차 반영)</th>
+                    <th class="portfolioapp_inverted_table_th_td">자본이득률</th>
+                    <th class="portfolioapp_inverted_table_th_td">자본이득률(환차 반영)</th>
+                </tr>
+                <tr class="portfolioapp_inverted_table_tr">
+                    <td class="portfolioapp_inverted_table_th_td">{{ target_portfolio.current_value|currency_krw }}</td>
+                    <td class="portfolioapp_inverted_table_th_td">{{ target_portfolio.capital_gain|currency_krw }}</td>
+                    <td class="portfolioapp_inverted_table_th_td">{{ target_portfolio.capital_gain_foreign_exchange_adjusted|currency_krw }}</td>
+                    <td class="portfolioapp_inverted_table_th_td">{{ target_portfolio.rate_of_return|percentage_rate_format }}</td>
+                    <td class="portfolioapp_inverted_table_th_td">{{ target_portfolio.rate_of_return_foreign_exchange_adjusted|percentage_rate_format }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
+{% endblock %}

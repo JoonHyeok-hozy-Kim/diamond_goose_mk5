@@ -59,16 +59,16 @@
 
 
         {% if target_user == user %}
-        <a href="{% url 'accountapp:update' pk=target_user.pk %}">
-            <p>
-                Change User Info
-            </p>
-        </a>
-        <a href="{% url 'accountapp:delete' pk=target_user.pk %}">
-            <p>
-                Delete My Account
-            </p>
-        </a>
+            <a href="{% url 'accountapp:update' pk=target_user.pk %}">
+                <p>
+                    Change User Info
+                </p>
+            </a>
+            <a href="{% url 'accountapp:delete' pk=target_user.pk %}">
+                <p>
+                    Delete My Account
+                </p>
+            </a>
         {% endif %}
 
 

@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'articleapp',
     'commentapp',
     'dashboardapp',
-    # 'portfolioapp',
+    'portfolioapp',
     # 'equitymasterapp',
     # 'equityownedapp',
     # 'equitytransactionapp',
