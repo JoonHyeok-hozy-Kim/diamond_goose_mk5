@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    <div style="max-width: 500px; margin: 4rem auto;">
+        <div class="mb-2">
+            <h4 class="dashboardapp_main_title">Dashboard Setup</h4>
+        </div>
+        <div class="text-white">
+            <form action="{% url 'dashboardapp:create' %}" method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                {% if user.is_authenticated %}
+                    <input type="submit" class="btn btn-info" value="Create">
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

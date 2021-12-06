@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+
+    {% load static %}
+    {% block extrahead %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/dashboardapp.css' %}">
+    {% endblock %}
+
+    <div style="margin: 1rem;">
+
+        <div class="dashboardapp_main_title">
+            <h1>My Dashboard</h1>
+        </div>
+
+        <div style="margin: 1rem;">
+
+        </div>
+
+    </div>
+
+
+{% endblock %}

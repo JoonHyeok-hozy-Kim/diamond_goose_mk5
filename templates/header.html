@@ -11,6 +11,18 @@
                 <span>Temp Welcome</span>
             </a> |
 
+            {% if user.is_authenticated %}
+                {% if user.dashboard %}
+                    <a href="{% url 'dashboardapp:detail' pk=user.pk %}" class="link-info" style="text-decoration-line: none;">
+                        <span>My Dashboard</span>
+                    </a> |
+                {% else %}
+                    <a href="{% url 'dashboardapp:create' %}" class="link-info" style="text-decoration-line: none;">
+                        <span>Create Dashboard</span>
+                    </a> |
+                {% endif %}
+            {% endif %}
+
 
             <a href="{% url 'articleapp:list' %}" class="link-info" style="text-decoration-line: none;">
                 <span>Articles</span>
