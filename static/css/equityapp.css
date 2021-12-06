@@ -1,0 +1,70 @@
+.equityapp_main_title {
+    display: inline-block;
+    background-color: #FF9C00;
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #FFFFFF
+}
+
+.equityapp_inverted_table{
+    border-collapse: collapse;
+    color:#FFFFFF;
+}
+
+.equityapp_inverted_table_tr {
+    display: block;
+    float: left;
+}
+
+.equityapp_inverted_table_th_td {
+    display: block;
+    width: 11rem;
+}
+
+.transaction_record_table_th_10p{
+    border: 1px solid black;
+    width: 10%;
+    text-align: center;
+    background-color: #007D8A;
+}
+.transaction_record_table_th_5p{
+    border: 1px solid black;
+    width: 5%;
+    text-align: center;
+    background-color: #007D8A;
+}
+.transaction_record_table_td_10p{
+    border: 1px solid black;
+    width: 10%;
+    text-align: center;
+    background-color: #264257;
+}
+.transaction_record_table_td_5p{
+    border: 1px solid black;
+    width: 5%;
+    text-align: center;
+    background-color: #264257;
+}
+.transaction_record_table_node_th{
+    border: 1px solid black;
+    width: 15%;
+    text-align: center;
+    background-color: #007D8A;
+}
+.transaction_record_table_node_td{
+    border: 1px solid black;
+    width: 15%;
+    text-align: center;
+    background-color: #264257;
+}
+.transaction_record_table_delete_th{
+    border: 1px solid black;
+    width: 2%;
+    text-align: center;
+    background-color: #FA0067;
+}
+.transaction_record_table_delete_td{
+    border: 1px solid black;
+    width: 2%;
+    text-align: center;
+    background-color: #264257;
+}

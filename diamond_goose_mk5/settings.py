@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    # 'bootstrap4',
+    'bootstrap4',
     'accountapp',
     # 'profileapp',
     # 'articleapp',
