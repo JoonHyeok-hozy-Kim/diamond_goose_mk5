@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <style>
+        .article_title {
+            height: 2.5rem;
+            color: #FFFFFF;
+            margin-bottom: 2rem;
+        }
+    </style>
+
+    <div style="margin: 2rem 2rem">
+        <div style="margin: 1rem auto;">
+            {% if target_article.owner == user %}
+                <a href="{% url 'articleapp:update' pk=target_article.pk %}" class="btn btn-light" style="display: inline">수정하기</a>
+                <a href="{% url 'articleapp:delete' pk=target_article.pk %}" class="btn btn-light" style="display: inline">삭제하기</a>
+            {% endif %}
+            <a href="{% url 'articleapp:list' %}" class="btn btn-light" style="display: inline">글 목록</a>
+        </div>
+        <div style="display: inline-block; margin: 1rem auto;">
+            <h1 class="article_title">
+                {{ target_article.title }}
+            </h1>
+        </div>
+        <div style="margin: .5rem 1rem; color: #FFFFFF;">
+            <h6>
+                written by
+                <a href="{% url 'accountapp:detail' pk=target_article.owner.pk %}"
+                   style="margin-left: 0.3rem; color:#79F92D; font-size: 1.2rem;">
+                    {{ target_article.owner.profile.nickname }}
+                </a>
+            </h6>
+            <h6 style="color: #FFFFFF">
+                {{ target_article.creation_date }}
+            </h6>
+        </div>
+        <div style="display: inline-block; margin-top: 2rem; min-height: 10rem;">
+            <div style="display: inline-block; max-width: 50%; float:left; margin-right: 1.5rem; margin-bottom: 1rem;">
+                <img src="{{ target_article.image.url }}" alt=""
+                     style="max-width: 100%;">
+            </div>
+            <div style="display: inline-block; color: #FFFFFF;">
+                <p style="line-height: 2; font-size: 1.1rem;">{{ target_article.content|linebreaks }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        {% include 'commentapp/detail.html' with article=target_article %}
+        {% include 'commentapp/create.html' with article=target_article %}
+    </div>
+
+{% endblock %}

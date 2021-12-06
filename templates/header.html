@@ -12,7 +12,26 @@
             </a> |
 
 
+            <a href="{% url 'articleapp:list' %}" class="link-info" style="text-decoration-line: none;">
+                <span>Articles</span>
+            </a> |
 
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'accountapp:detail' pk=user.pk %}" class="link-info" style="text-decoration-line: none;">
+                    <span>My Page</span>
+                </a> |
+                <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="link-info" style="text-decoration-line: none;">
+                    <span>Logout</span>
+                </a>
+            {% else %}
+                <a href="{% url 'accountapp:create' %}" class="link-info" style="text-decoration-line: none;">
+                    <span>Sign Up</span>
+                </a> |
+                <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="link-info" style="text-decoration-line: none;">
+                    <span>Login</span>
+                </a>
+            {% endif %}
 
         </div>
     </div>

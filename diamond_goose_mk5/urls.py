@@ -22,9 +22,9 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('accounts/', include('accountapp.urls')),
-    # path('profiles/', include('profileapp.urls')),
-    # path('articles/', include('articleapp.urls')),
-    # path('comments/', include('commentapp.urls')),
+    path('profiles/', include('profileapp.urls')),
+    path('articles/', include('articleapp.urls')),
+    path('comments/', include('commentapp.urls')),
     # path('portfolio/', include('portfolioapp.urls')),
     # path('equitymaster/', include('equitymasterapp.urls')),
     # path('equitiesowned/', include('equityownedapp.urls')),

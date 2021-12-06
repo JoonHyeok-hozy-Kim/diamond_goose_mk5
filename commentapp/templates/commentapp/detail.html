@@ -1,0 +1,32 @@
+<style>
+    .comment_table_columns {
+        display: inline-block;
+        margin: 0.2rem 1%;
+    }
+</style>
+
+<div style="display: block; margin: 0 2rem;">
+    <div style="display: block; margin-bottom: 0; background-color: #FF9C00; color: #081321; font-weight: bold;">
+        <h3 style="margin: 0 .5rem; font-weight: bold;">
+            Comments
+        </h3>
+        <div style="font-weight: bold;">
+            <h7 class="comment_table_columns" style="width: 15%;">작성자</h7>
+            <h7 class="comment_table_columns" style="width: 15%;">작성일</h7>
+            <h7 class="comment_table_columns" style="width: 62%;">내용</h7>
+        </div>
+    </div>
+    <div style="color: #FFFFFF;">
+        {% for comment in article.comment.all %}
+            <div class="comment_table_columns" style="width: 15%;">{{ comment.owner.profile.nickname }}</div>
+            <div class="comment_table_columns" style="width: 15%;">{{ comment.creation_date }}</div>
+            <div class="comment_table_columns" style="width: 62%;">
+                <div style="display: inline-block;">{{ comment.content }}</div>
+                {% if user == comment.owner %}
+                    <a href="{% url 'commentapp:delete' pk=comment.pk %}" style="display: inline-block; color: #FA00BE;">삭제</a>
+                {% endif %}
+            </div>
+            <hr style="margin: 0.1rem; color: #FFFFFF;">
+        {% endfor %}
+    </div>
+</div>

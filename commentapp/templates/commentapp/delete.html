@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block content %}
+
+    {% block extrahead %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/articleapp.css' %}">
+    {% endblock %}
+
+    <div style="max-width: 500px; margin: 4rem auto">
+        <div style="margin: 2rem 0;">
+            <h4 class="articleapp_main_title">Delete Comment</h4>
+            <h6 style="color: #FFFFFF;">Are you sure to delete your comment?</h6>
+            <div style="display: block; min-height: 5rem; background-color: #264257;">
+                <h7 style="margin: 1rem; color: #FFFFFF; font-weight: bold;">내용</h7>
+                <hr style="margin: 0.5rem; color: #FFFFFF;">
+                <h8 style="margin: 1rem; color: #FFFFFF;">{{ target_comment.content }}</h8>
+            </div>
+        </div>
+        <div class="text-white">
+            <form action="{% url 'commentapp:delete' pk=target_comment.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-dark">
+                <a href="{% url 'articleapp:detail' pk=target_comment.article.pk %}" class="btn btn-light">취소</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
