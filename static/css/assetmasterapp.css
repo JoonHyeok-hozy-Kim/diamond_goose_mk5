@@ -1,23 +1,16 @@
-.equityapp_main_title {
-    display: inline-block;
-    background-color: #FF9C00;
-    font-family: 'Nanum Gothic', sans-serif;
-    color: #FFFFFF
+.asset_card_white_text_div {
+    width: 96%;
+    margin-bottom: 2%;
+    margin-left: 4%;
+    color: #FFFFFF;
 }
 
-.equityapp_inverted_table{
-    border-collapse: collapse;
-    color:#FFFFFF;
-}
-
-.equityapp_inverted_table_tr {
-    display: block;
-    float: left;
-}
-
-.equityapp_inverted_table_th_td {
-    display: block;
-    width: 11rem;
+.asset_card_black_text_div {
+    width: 96%;
+    margin-bottom: 2%;
+    margin-left: 4%;
+    color: #000000;
+    font-weight: bolder;
 }
 
 .transaction_record_table_th_10p{

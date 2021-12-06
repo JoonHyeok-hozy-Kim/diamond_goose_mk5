@@ -27,7 +27,7 @@ urlpatterns = [
     path('comments/', include('commentapp.urls')),
     path('dashboard/', include('dashboardapp.urls')),
     path('portfolio/', include('portfolioapp.urls')),
-    # path('equitymaster/', include('equitymasterapp.urls')),
+    path('assetmaster/', include('assetmasterapp.urls')),
     # path('equitiesowned/', include('equityownedapp.urls')),
     # path('equitytransactions/', include('equitytransactionapp.urls')),
 

@@ -1,12 +1,17 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, DetailView
 
 from dashboardapp.models import Dashboard
+from portfolioapp.decorators import portfolio_ownership_required
 from portfolioapp.forms import PortfolioCreationForm
 from portfolioapp.models import Portfolio
+
+has_ownership = [login_required, portfolio_ownership_required]
 
 
 class PortfolioCreateView(CreateView):
@@ -27,6 +32,7 @@ class PortfolioCreateView(CreateView):
         return reverse('dashboardapp:detail', kwargs={'pk':self.request.POST['dashboard_pk']})
 
 
+@method_decorator(has_ownership,'get')
 class PortfolioDetailView(DetailView):
     model = Portfolio
     context_object_name = 'target_portfolio'
