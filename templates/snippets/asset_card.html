@@ -1,4 +1,4 @@
-{% if asset.asset_type == 'EQUITY' %}
+{% if asset.asset_type == 'EQUITY' or asset.asset_type == 'ETF' or asset.asset_type == 'CRYPTO' %}
 <div class="asset_card_white_text_div">
 {% else %}
 <div class="asset_card_black_text_div">
@@ -16,7 +16,7 @@
 </div>
 
 
-{% if asset.asset_type == 'EQUITY' %}
+{% if asset.asset_type == 'EQUITY' or asset.asset_type == 'ETF' or asset.asset_type == 'CRYPTO' %}
 <div class="asset_card_white_text_div">
 {% else %}
 <div class="asset_card_black_text_div">
@@ -27,8 +27,11 @@
 </div>
 
 
-<div style="width: 250px; height: 250px; background-color: #FFFFFF; align-items: center;
+<div style="width: 250px; height: 250px; background-color: #FFFFFF; align-items: center; justify-content: center;
             border-radius: 0;">
-    <img src="{{ asset.image.url }}" alt=""
-         style="display: inline-block; max-width: 100%;">
+    {% for context_asset in target_asset_list %}
+        {% if context_asset.ticker == asset.ticker %}
+            <img src="{{ context_asset.image.url }}" alt="" style="width: 90%;">
+        {% endif %}
+    {% endfor %}
 </div>

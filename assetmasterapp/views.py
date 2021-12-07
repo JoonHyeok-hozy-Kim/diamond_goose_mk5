@@ -21,7 +21,7 @@ class AssetListView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(AssetListView, self).get_context_data(**kwargs)
 
-        query_asset_list = Asset.objects.all().order_by('ticker').values()
+        query_asset_list = Asset.objects.all().order_by('asset_type','ticker').values()
         for query_asset in query_asset_list:
             query_asset['name'] = Truncator(query_asset['name']).chars(29)
             query_asset['image'] = 'media/'+query_asset['image']

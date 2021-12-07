@@ -13,6 +13,37 @@
     font-weight: bolder;
 }
 
+.asset_div_equity {
+    background-color: #264257;
+}
+.asset_div_etf {
+    background-color: #068CD6;
+}
+.asset_div_bond {
+    background-color: #FF9C00;
+}
+.asset_div_reits {
+    background-color: #00C484;
+}
+.asset_div_pension {
+    background-color: #07C500;
+}
+.asset_div_crypto {
+    background-color: #F707AC;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .transaction_record_table_th_10p{
     border: 1px solid black;
     width: 10%;

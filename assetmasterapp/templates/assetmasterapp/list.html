@@ -12,12 +12,10 @@
 
         .container {
             width: 100%;
-            height: 300px;
         }
 
         .container a {
             width: 250px;
-            height: 300px;
             text-decoration: none;
         }
 
@@ -29,9 +27,6 @@
             border-radius: 5px;
         }
 
-        .container img {
-            width: 100%;
-        }
 
     </style>
 
@@ -44,8 +39,16 @@
             {% for asset in query_asset_list %}
                 {% if asset.asset_type == 'EQUITY' %}
                     <div style="background-color: #264257;">
+                {% elif asset.asset_type == 'ETF' %}
+                    <div style="background-color: #0080F0;">
                 {% elif asset.asset_type == 'BOND' %}
                     <div style="background-color: #FF9C00;">
+                {% elif asset.asset_type == 'REITS' %}
+                    <div style="background-color: #00C484;">
+                {% elif asset.asset_type == 'PENSION' %}
+                    <div style="background-color: #1FF000;">
+                {% elif asset.asset_type == 'CRYPTO' %}
+                    <div style="background-color: #F001A3;">
                 {% endif %}
                         <a href="{% url 'assetmasterapp:detail' pk=asset.id %}">
                             {% include 'snippets/asset_card.html' with asset=asset %}
