@@ -1,13 +1,18 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
-from django.views.generic import CreateView
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, ListView, DetailView
 
 from assetmasterapp.models import Asset
+from equityapp.decorators import equity_ownership_required
 from equityapp.forms import EquityCreationForm
 from equityapp.models import Equity
 from portfolioapp.models import Portfolio
+
+has_ownership = [login_required, equity_ownership_required]
 
 
 class EquityCreateView(CreateView):
@@ -26,4 +31,10 @@ class EquityCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('accountapp:temp_welcome')
+        return reverse('portfolioapp:detail',kwargs={'pk':self.object.portfolio.pk})
+
+
+@method_decorator(has_ownership,'get')
+class EquityDetailView(DetailView):
+    model = Equity
+    template_name = 'equityapp/detail.html'

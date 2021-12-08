@@ -62,13 +62,7 @@ class AssetDetailView(DetailView, FormMixin):
             my_equity_scalar_query = Equity.objects.filter(portfolio=my_portfolio_pk, asset=self.object.pk).values()
             if my_equity_scalar_query:
                 for my_equity in my_equity_scalar_query:
-                    context.update({'my_equity_asset_pk': my_equity['asset_id']})
-                    context.update({'my_equity_asset_average_purchase_price_mv': my_equity['average_purchase_price_mv']})
-                    context.update({'my_equity_asset_average_purchase_price_fifo': my_equity['average_purchase_price_fifo']})
-                    context.update({'my_equity_asset_quantity': my_equity['quantity']})
-                    context.update({'my_equity_asset_total_amount': my_equity['total_amount']})
-                    context.update({'my_equity_asset_rate_of_return_mv': my_equity['rate_of_return_mv']})
-                    context.update({'my_equity_asset_rate_of_return_fifo': my_equity['rate_of_return_fifo']})
+                    context.update({'my_equity_asset': my_equity})
 
         return context
 

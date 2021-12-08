@@ -11,6 +11,7 @@ from dashboardapp.decorators import dashboard_ownership_required
 from dashboardapp.forms import DashboardCreationForm
 from dashboardapp.models import Dashboard
 from portfolioapp.forms import PortfolioCreationForm
+from portfolioapp.models import Portfolio
 
 has_ownership = [login_required, dashboard_ownership_required]
 
@@ -42,9 +43,9 @@ class DashboardDetailView(DetailView, FormMixin):
     def get_context_data(self, **kwargs):
         context = super(DashboardDetailView, self).get_context_data(**kwargs)
 
-        target_portfolio_query = Dashboard.objects.filter(owner=self.request.user).values()
-        if target_portfolio_query:
-            target_portfolio_pk = target_portfolio_query[0]['owner_id']
-            context.update({'target_portfolio_pk': target_portfolio_pk})
+        my_portfolio_scalar_query = Portfolio.objects.filter(owner=self.request.user).values()
+        if my_portfolio_scalar_query:
+            for my_portfolio in my_portfolio_scalar_query:
+                context.update({'target_portfolio_pk': my_portfolio['id']})
 
         return context
