@@ -1,0 +1,62 @@
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/equityapp.css' %}">
+{% endblock %}
+
+<div>
+    <div style="display: block; width: 100%; ">
+        <h4 style="margin-left: 1rem; color: #FFFFFF;">Records</h4>
+    </div>
+
+    <div style="display: block; margin-left: 1%;">
+        <table style="width: 100%; color: #FFFFFF;">
+            <tr>
+                <th class="transaction_record_table_th_10p">거래일자</th>
+                <th class="transaction_record_table_th_5p">유형</th>
+                <th class="transaction_record_table_th_5p">수량</th>
+                <th class="transaction_record_table_th_10p">가격</th>
+                <th class="transaction_record_table_th_5p">제비용</th>
+                <th class="transaction_record_table_th_5p">제세금</th>
+                <th class="transaction_record_table_node_th">비고</th>
+                <th class="transaction_record_table_delete_th">삭제</th>
+            </tr>
+            {% for transaction in equity_owned.transaction.all|dictsortreversed:"transaction_date" %}
+                    <tr>
+                        <td class="transaction_record_table_td_10p">{{ transaction.transaction_date|date:"Y-m-d h:i:s" }}</td>
+                        <td class="transaction_record_table_td_5p">{{ transaction.transaction_type }}</td>
+                        <td class="transaction_record_table_td_5p">{{ transaction.quantity }}</td>
+
+                        {% load currency_format %}
+                        {% if transaction.equity_owned.equity.currency == 'USD' %}
+                            <td class="transaction_record_table_td_10p">{{ transaction.price|currency_usd }}</td>
+                            <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|currency_usd  }}</td>
+                            <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|currency_usd  }}</td>
+                        {% elif transaction.equity_owned.equity.currency == 'KRW' %}
+                            <td class="transaction_record_table_td_10p">{{ transaction.price|currency_krw }}</td>
+                            <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|currency_krw  }}</td>
+                            <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|currency_krw  }}</td>
+                        {% else %}
+                            <td class="transaction_record_table_td_10p">{{ transaction.price|floatformat:2|intcomma }}</td>
+                            <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|floatformat:2|intcomma  }}</td>
+                            <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|floatformat:2|intcomma  }}</td>
+                        {% endif %}
+
+                        {% if transaction.note %}
+                            <td class="transaction_record_table_node_td">{{ transaction.note }}</td>
+                        {% else %}
+                            <td class="transaction_record_table_node_td"></td>
+                        {% endif %}
+
+                        {% if transaction.equity_owned.owner == user %}
+                            <td class="transaction_record_table_delete_td">
+                                <a href="{% url 'equitytransactionapp:delete' pk=transaction.pk %}"
+                                   style="color: #FA0067;text-decoration: none;">X</a>
+                            </td>
+                        {% else %}
+                            <td class="transaction_record_table_delete_td"></td>
+                        {% endif %}
+                    </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

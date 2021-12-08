@@ -110,6 +110,29 @@
             {% endif %}
         </div>
     </div>
+
+    <div style="display: block;">
+        <h3 style=" color: #FFFFFF;">Transactions</h3>
+        <div style="display: block; width: 100%;">
+            <div style="display: block; width: 20%; float: left; margin-right: 0.5%;">
+                <div style="margin-bottom: 1rem;">
+                    {% include 'equitytransactionapp/create.html' with asset=target_asset %}
+                </div>
+
+                <div style="display: inline-block;">
+                    {% include 'equitytransactionapp/export_csv_template.html' %}
+                </div>
+
+                <div>
+                    {% include 'equitytransactionapp/import_csv.html' with asset=target_asset %}
+                </div>
+            </div>
+            <div style="display: inline-block; width: 79.5%;">
+{#                {% include 'equitytransactionapp/list.html' with equity_owned=target_equity_owned %}#}
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

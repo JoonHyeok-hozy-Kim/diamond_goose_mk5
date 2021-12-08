@@ -29,6 +29,6 @@ urlpatterns = [
     path('portfolio/', include('portfolioapp.urls')),
     path('assetmaster/', include('assetmasterapp.urls')),
     path('equities/', include('equityapp.urls')),
-    # path('equitytransactions/', include('equitytransactionapp.urls')),
+    path('equitytransactions/', include('equitytransactionapp.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

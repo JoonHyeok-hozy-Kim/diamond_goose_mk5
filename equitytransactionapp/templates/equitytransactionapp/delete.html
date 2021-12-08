@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load currency_format %}
+
+{% block content %}
+
+    {% load static %}
+    {% block extrahead %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/equityapp.css' %}">
+    {% endblock %}
+
+    <div style="max-width: 500px; margin: 4rem auto">
+        <div style="margin: 2rem 0;">
+            <h4 class="equityapp_main_title">Delete Transaction</h4>
+            <h6 style="color: #FFFFFF;">Are you sure to delete this transaction?</h6>
+            <div style="display: block; min-height: 5rem; background-color: #264257;">
+                <table class="equityapp_inverted_table">
+                    <tr class="equityapp_inverted_table_tr">
+                        <th class="equityapp_inverted_table_th_td">거래일자</th>
+                        <th class="equityapp_inverted_table_th_td">유형</th>
+                        <th class="equityapp_inverted_table_th_td">수량</th>
+                        <th class="equityapp_inverted_table_th_td">가격</th>
+                        <th class="equityapp_inverted_table_th_td">제비용</th>
+                        <th class="equityapp_inverted_table_th_td">제세금</th>
+                        <th class="equityapp_inverted_table_th_td">비고</th>
+                    </tr>
+                        <tr class="equityapp_inverted_table_tr">
+                            <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_date|date:"Y.m.d h:i:s" }}</td>
+                            <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_type }}</td>
+                            <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.quantity }}</td>
+
+                            {% load currency_format %}
+                            {% if transaction.equity_owned.equity.currency == 'USD' %}}
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.price|currency_usd }}</td>
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_fee|currency_usd  }}</td>
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_tax|currency_usd  }}</td>
+                            {% elif transaction.equity_owned.equity.currency == 'KRW' %}}
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.price|currency_krw }}</td>
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_fee|currency_krw  }}</td>
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_tax|currency_krw  }}</td>
+                            {% else %}
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.price|floatformat:2|intcomma }}</td>
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_fee|floatformat:2|intcomma  }}</td>
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.transaction_tax|floatformat:2|intcomma  }}</td>
+                            {% endif %}
+
+                            {% if transaction.note %}
+                                <td class="equityapp_inverted_table_th_td">{{ target_equity_transaction.note }}</td>
+                            {% else %}
+                                <td class="equityapp_inverted_table_th_td"></td>
+                            {% endif %}
+                        </tr>
+                </table>
+            </div>
+        </div>
+        <div class="text-white">
+            <form action="{% url 'equitytransactionapp:delete' pk=target_equity_transaction.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-dark">
+                <a href="{% url 'equityownedapp:detail' pk=target_equity_transaction.equity_owned.pk %}" class="btn btn-light">취소</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

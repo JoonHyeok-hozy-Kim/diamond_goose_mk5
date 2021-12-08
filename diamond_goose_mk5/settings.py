@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'portfolioapp',
     'assetmasterapp',
     'equityapp',
-    # 'equitytransactionapp',
+    'equitytransactionapp',
 ]
 
 MIDDLEWARE = [
