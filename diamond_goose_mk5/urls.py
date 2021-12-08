@@ -28,7 +28,7 @@ urlpatterns = [
     path('dashboard/', include('dashboardapp.urls')),
     path('portfolio/', include('portfolioapp.urls')),
     path('assetmaster/', include('assetmasterapp.urls')),
-    # path('equitiesowned/', include('equityownedapp.urls')),
+    path('equities/', include('equityapp.urls')),
     # path('equitytransactions/', include('equitytransactionapp.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

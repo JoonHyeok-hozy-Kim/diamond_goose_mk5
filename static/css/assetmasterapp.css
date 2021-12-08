@@ -1,16 +1,18 @@
 .asset_card_white_text_div {
-    width: 96%;
+    width: 90%;
     margin-bottom: 2%;
     margin-left: 4%;
     color: #FFFFFF;
+    justify-items: start;
 }
 
 .asset_card_black_text_div {
-    width: 96%;
+    width: 90%;
     margin-bottom: 2%;
     margin-left: 4%;
     color: #000000;
     font-weight: bolder;
+    justify-items: start;
 }
 
 .asset_div_equity {

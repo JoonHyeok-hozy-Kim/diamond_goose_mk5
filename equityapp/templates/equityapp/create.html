@@ -1,0 +1,14 @@
+{% load bootstrap4 %}
+
+<div style="max-width: 500px; margin: 4rem auto">
+    <div class="text-white">
+        <form action="{% url 'equityapp:create' %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% if user.is_authenticated %}
+                <input type="submit" class="btn btn-info" value="Open Position">
+            {% endif %}
+            <input type="hidden" name="asset_pk" value="{{ asset.pk }}">
+        </form>
+    </div>
+</div>

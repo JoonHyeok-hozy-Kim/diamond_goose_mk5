@@ -1,3 +1,6 @@
+import requests
+import json
+
 from django.db import models
 import yfinance as yf
 
@@ -36,19 +39,43 @@ class Asset(models.Model):
 
     @property
     def current_price(self):
-        yfinance_markets = ['NASDAQ','NYSE']
-        other_markets = ['KSE']
+        yfinance_markets = ['NASDAQ', 'NYSE', 'KSE']
 
         if self.market in yfinance_markets:
-            ticker_data = yf.Ticker(self.ticker)
-            today_ticker_data = ticker_data.history(period='1d')
-            return round(today_ticker_data['Close'][0], 2)
+            ticker = self.ticker
 
-        elif self.market in other_markets:
-            return 0
+            if self.market == 'KSE':
+                ticker += '.KS'
+
+            result_current_price = 0
+
+            try:
+                ticker_data = yf.Ticker(ticker)
+                today_ticker_data = ticker_data.history(period='1d')
+
+                if self.market == 'KSE':
+                    result_current_price = round(today_ticker_data['Close'][0])
+                else:
+                    result_current_price = round(today_ticker_data['Close'][0], 2)
+            except:
+                None
+
+            return result_current_price
 
         else:
             if self.asset_type == 'CRYPTO':
-                return 0
+
+                url_list = ['https://api.upbit.com/v1/candles/minutes/1?market=']
+                url_list.append(self.currency)
+                url_list.append('-')
+                url_list.append(self.ticker)
+                url_list.append('&count=1')
+
+                url = ''.join(url_list)
+                headers = {"Accept": "application/json"}
+                response = requests.request("GET", url, headers=headers)
+                dict_result = json.loads(response.text[1:-1])
+
+                return round(float(dict_result['opening_price']),2)
 
         return -1
