@@ -153,7 +153,7 @@
                                         </tr>
 
                                         {% if equity_transaction %}
-                                            {% with user_id=target_user_id %}
+                                            {% with user_id=target_user_id target_currency=target_currency %}
                                                 {% include 'equitytransactionapp/list.html' with transaction_list=equity_transaction %}
                                             {% endwith %}
                                         {% endif %}

@@ -12,11 +12,11 @@
         <td class="transaction_record_table_td_5p">{{ transaction.transaction_type }}</td>
         <td class="transaction_record_table_td_5p">{{ transaction.quantity }}</td>
 
-        {% if transaction.equity_owned.equity.currency == 'USD' %}
+        {% if target_currency == 'USD' %}
             <td class="transaction_record_table_td_10p">{{ transaction.price|currency_usd }}</td>
             <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|currency_usd  }}</td>
             <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|currency_usd  }}</td>
-        {% elif transaction.equity_owned.equity.currency == 'KRW' %}
+        {% elif target_currency == 'KRW' %}
             <td class="transaction_record_table_td_10p">{{ transaction.price|currency_krw }}</td>
             <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|currency_krw  }}</td>
             <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|currency_krw  }}</td>
@@ -27,9 +27,9 @@
         {% endif %}
 
         {% if transaction.note %}
-            <td class="transaction_record_table_node_td">{{ transaction.note }}</td>
+            <td class="transaction_record_table_note_td">{{ transaction.note }}</td>
         {% else %}
-            <td class="transaction_record_table_node_td"></td>
+            <td class="transaction_record_table_note_td"></td>
         {% endif %}
 
         {% if user_id == user.pk %}

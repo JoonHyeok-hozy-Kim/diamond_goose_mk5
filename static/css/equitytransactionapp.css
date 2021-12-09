@@ -17,19 +17,19 @@
     text-align: center;
     background-color: #007D8A;
 }
-.transaction_record_table_th_5p{
-    float: none;
-    border: 0.5px solid black;
-    width: 5%;
-    text-align: center;
-    background-color: #007D8A;
-}
 .transaction_record_table_td_10p{
     float: none;
     border: 0.5px solid black;
     width: 10%;
     text-align: center;
     background-color: #264257;
+}
+.transaction_record_table_th_5p{
+    float: none;
+    border: 0.5px solid black;
+    width: 5%;
+    text-align: center;
+    background-color: #007D8A;
 }
 .transaction_record_table_td_5p{
     float: none;
@@ -38,18 +38,18 @@
     text-align: center;
     background-color: #264257;
 }
-.transaction_record_table_node_th{
+.transaction_record_table_note_th{
     float: none;
     border: 0.5px solid black;
     width: 15%;
     text-align: center;
     background-color: #007D8A;
 }
-.transaction_record_table_node_td{
+.transaction_record_table_note_td{
     float: none;
     border: 0.5px solid black;
     width: 15%;
-    text-align: center;
+    text-align: start;
     background-color: #264257;
 }
 .transaction_record_table_delete_th{

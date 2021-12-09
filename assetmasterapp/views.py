@@ -1,4 +1,7 @@
+import json
 import os
+import yfinance as yf
+from django.contrib.sites import requests
 
 from django.shortcuts import render
 
@@ -51,7 +54,21 @@ class AssetDetailView(DetailView, FormMixin):
     context_object_name = 'target_asset'
     template_name = 'assetmasterapp/detail.html'
 
+
     def get_context_data(self, **kwargs):
+        # Update Asset's current price
+        self.object.update_current_price()
+        self.object.refresh_from_db()
+
+        # Update Equity's quantity, total_amount
+        portfolio_query = Portfolio.objects.filter(owner=self.request.user).values('id')
+        portfolio_pk = portfolio_query[0]['id']
+        equity_query = Equity.objects.filter(asset=self.object.pk, portfolio=portfolio_pk, owner=self.request.user)
+        if equity_query:
+            target_equity = equity_query[0]
+            target_equity.update_quantity_amount_prices()
+            target_equity.update_rate_of_returns()
+
         context = super(AssetDetailView, self).get_context_data(**kwargs)
 
         # Getting asset id from my portfolio
@@ -67,12 +84,14 @@ class AssetDetailView(DetailView, FormMixin):
             if my_equity_scalar_query:
                 for my_equity in my_equity_scalar_query:
                     my_equity_pk = my_equity['id']
-                context.update({'my_equity_asset': my_equity})
+                    context.update({'my_equity_asset': my_equity})
 
                 # Equity Transactions
                 equity_transaction_query = EquityTransaction.objects.filter(equity=my_equity_pk).order_by('-transaction_date').values()
                 if equity_transaction_query:
                     context.update({'equity_transaction': equity_transaction_query})
+
+        context.update({'target_currency': self.object.currency})
 
         return context
 
