@@ -15,82 +15,14 @@
     justify-items: start;
 }
 
-.asset_div_equity {
-    background-color: #264257;
-}
-.asset_div_etf {
-    background-color: #068CD6;
-}
-.asset_div_bond {
-    background-color: #FF9C00;
-}
-.asset_div_reits {
-    background-color: #00C484;
-}
-.asset_div_pension {
-    background-color: #07C500;
-}
-.asset_div_crypto {
-    background-color: #F707AC;
-}
+.asset_div_equity { background-color: #264257; }
+.asset_div_etf { background-color: #068CD6; }
+.asset_div_bond { background-color: #FF9C00; }
+.asset_div_reits { background-color: #00C484; }
+.asset_div_pension { background-color: #07C500; }
+.asset_div_crypto { background-color: #F707AC; }
 
-
-
-
-
-
-
-
-
-
-
-
-
-.transaction_record_table_th_10p{
-    border: 1px solid black;
-    width: 10%;
-    text-align: center;
-    background-color: #007D8A;
-}
-.transaction_record_table_th_5p{
-    border: 1px solid black;
-    width: 5%;
-    text-align: center;
-    background-color: #007D8A;
-}
-.transaction_record_table_td_10p{
-    border: 1px solid black;
-    width: 10%;
-    text-align: center;
-    background-color: #264257;
-}
-.transaction_record_table_td_5p{
-    border: 1px solid black;
-    width: 5%;
-    text-align: center;
-    background-color: #264257;
-}
-.transaction_record_table_node_th{
-    border: 1px solid black;
-    width: 15%;
-    text-align: center;
-    background-color: #007D8A;
-}
-.transaction_record_table_node_td{
-    border: 1px solid black;
-    width: 15%;
-    text-align: center;
-    background-color: #264257;
-}
-.transaction_record_table_delete_th{
-    border: 1px solid black;
-    width: 2%;
-    text-align: center;
-    background-color: #FA0067;
-}
-.transaction_record_table_delete_td{
-    border: 1px solid black;
-    width: 2%;
-    text-align: center;
-    background-color: #264257;
-}
+.assetmasterapp_inverted_table { border-collapse: collapse; color:#FFFFFF; }
+.assetmasterapp_inverted_table_tr { display: block; float: left;}
+.assetmasterapp_inverted_table_th { display: block; width: 11rem; }
+.assetmasterapp_inverted_table_td { display: block; width: 11rem; }

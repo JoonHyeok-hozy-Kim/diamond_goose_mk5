@@ -4,7 +4,6 @@
     <div class="text-white">
         <form action="{% url 'equityapp:create' %}" method="post">
             {% csrf_token %}
-            {% bootstrap_form form %}
             {% if user.is_authenticated %}
                 <input type="submit" class="btn btn-info" value="Open Position">
             {% endif %}

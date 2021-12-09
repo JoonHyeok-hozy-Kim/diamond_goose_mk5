@@ -21,7 +21,7 @@ from equitytransactionapp.models import EquityTransaction
 from portfolioapp.models import Portfolio
 
 
-class EquityTransactionCreateView(CreateView, FormMixin):
+class EquityTransactionCreateView(CreateView):
     model = EquityTransaction
     form_class = EquityTransactionCreationForm
     template_name = 'equitytransactionapp/create.html'
@@ -30,35 +30,36 @@ class EquityTransactionCreateView(CreateView, FormMixin):
         temp_transaction = form.save(commit=False)
         my_portfolio_scalar_query = Portfolio.objects.filter(owner=self.request.user).values()
         for my_portfolio in my_portfolio_scalar_query:
-            target_portfolio = my_portfolio
-        temp_transaction.equity = Equity.objects.get(asset=self.request.POST['asset_pk'], portfolio=target_portfolio)
+            target_portfolio_pk = my_portfolio['id']
+        target_asset_pk = self.request.POST['asset_pk']
+        temp_transaction.equity = Equity.objects.get(asset=target_asset_pk, portfolio=target_portfolio_pk)
         temp_transaction.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('equityapp:detail',kwargs={'pk':self.object.equity_owned.pk})
+        return reverse('assetmasterapp:detail',kwargs={'pk':self.object.equity.asset.pk})
 
 
-# class EquityTransactionListView(ListView):
-#     model = EquityTransaction
-#     context_object_name = 'equity_transaction_list'
-#     template_name = 'equitytransactionapp/list.html'
-#
-#
-# class EquityTransactionDeleteView(DeleteView):
-#     model = EquityTransaction
-#     context_object_name = 'target_equity_transaction'
-#     template_name = 'equitytransactionapp/delete.html'
-#
-#     def get_success_url(self):
-#         return reverse('equityownedapp:detail',kwargs={'pk':self.object.equity_owned.pk})
+class EquityTransactionListView(ListView):
+    model = EquityTransaction
+    context_object_name = 'equity_transaction_list'
+    template_name = 'equitytransactionapp/list.html'
+
+
+class EquityTransactionDeleteView(DeleteView):
+    model = EquityTransaction
+    context_object_name = 'target_equity_transaction'
+    template_name = 'equitytransactionapp/delete.html'
+
+    def get_success_url(self):
+        return reverse('assetmasterapp:detail',kwargs={'pk':self.object.equity.asset.pk})
 
 
 def import_csv(request):
     asset_pk = request.POST['asset_pk']
     my_portfolio_scalar_query = Portfolio.objects.filter(owner=request.user).values()
     for my_portfolio in my_portfolio_scalar_query:
-        target_portfolio = my_portfolio
+        target_portfolio_pk = my_portfolio['id']
 
     try:
         if request.method == 'POST' and request.FILES['transaction_file']:
@@ -80,7 +81,7 @@ def import_csv(request):
                 aware_datetime = make_aware(naive_datetime)
 
                 obj = EquityTransaction.objects.create(
-                    equity=Equity.objects.get(asset=asset_pk, portfolio=target_portfolio),
+                    equity=Equity.objects.get(asset=asset_pk, portfolio=target_portfolio_pk),
                     transaction_type=db_frame.transaction_type,
                     quantity=db_frame.quantity,
                     price=db_frame.price,
@@ -96,10 +97,12 @@ def import_csv(request):
     except Exception as identifier:
         print(identifier)
 
-    return render(request,'accountapp/temp_welcome.html')
+    return reverse('assetmasterapp:detail', kwargs={'pk':asset_pk})
 
 
 def export_csv_template(request):
+    asset_pk = request.POST['asset_pk']
+
     if request.method == 'POST':
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="transaction_csv_template.csv"'
@@ -127,4 +130,4 @@ def export_csv_template(request):
 
         return response
 
-    return render(request,'accountapp/temp_welcome.html')
+    return reverse('assetmasterapp:detail', kwargs={'pk': asset_pk})

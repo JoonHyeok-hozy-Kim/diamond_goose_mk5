@@ -4,136 +4,168 @@
 
 {% block content %}
 
-<style>
-    table { border-collapse: collapse; color:#FFFFFF; }
-    tr { display: block; float: left;}
-    th, td { display: block; width: 11rem; }
-</style>
+    {% load static %}
+    {% block extrahead %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/assetmasterapp.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/equitytransactionapp.css' %}">
+    {% endblock %}
 
-
-<div style="margin: 2rem 2rem">
-    <div style="margin: 1rem auto;">
-        <a href="{% url 'assetmasterapp:list' %}" class="btn btn-light" style="display: inline">자산 목록</a>
-        <a href="{% url 'assetmasterapp:update' pk=target_asset.pk %}" class="btn btn-light" style="display: inline">수정하기</a>
-        <a href="{% url 'assetmasterapp:delete' pk=target_asset.pk %}" class="btn btn-light" style="display: inline">삭제하기</a>
-        {% if my_portfolio_pk %}
-            <a href="{% url 'portfolioapp:detail' pk=my_portfolio_pk %}" class="btn btn-info" style="display: inline">My Portfolio</a>
-        {% endif %}
-    </div>
-    <div style="display: inline-block; margin: 1rem auto;">
-        <div style="display: flex; float:left; width: 250px; height: 250px; margin-right: 2rem;
-                    align-items: center; justify-content: center; background-color: #FFFFFF;">
-            <img src="{{ target_asset.image.url }}" alt="" style="width: 90%;">
-        </div>
-        <div style="display: inline-block;">
-            <div>
-                <h3 style="display: inline-block; margin-right: 1rem; color:#FFFFFF">
-                    {{ target_asset.name }}
-                </h3>
-                <h5 style="display: inline; background-color: #264257; color:#FFFFFF">
-                    {{ target_asset.ticker }}
-                </h5>
-            </div>
-
-            <div style="margin: 1rem 1rem;">
-                <div>
-                    <table>
-                        <tr>
-                            <th>Market</th>
-                            <th>Currency</th>
-                            <th>현재가</th>
-                        </tr>
-                        <tr>
-                            <td>{{ target_asset.market }}</td>
-                            <td>{{ target_asset.currency }}</td>
-                            {% if target_asset.currency == 'USD' %}
-                                <td>{{ target_asset.current_price|currency_usd }}</td>
-                            {% elif target_asset.currency == 'KRW' %}
-                                <td>{{ target_asset.current_price|currency_krw }}</td>
-                            {% else %}
-                                <td>{{ target_asset.current_price|intcomma }}</td>
-                            {% endif %}
-                        </tr>
-                    </table>
-                </div>
-
-                {% if my_equity_asset.asset_id == target_asset.pk %}
-                    <div>
-                        <div style="display: inline-block">
-                            <table>
-                                <tr>
-                                    <th>보유수량</th>
-                                    <th>수익률(MV)</th>
-                                    <th>수익률(FIFO)</th>
-                                </tr>
-                                <tr>
-                                    <td>{{ my_equity_asset.quantity }}</td>
-                                    <td>{{ my_equity_asset.rate_of_return_mv|percentage_rate_format }}</td>
-                                    <td>{{ my_equity_asset.rate_of_return_fifo|percentage_rate_format }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div style="display: inline-block">
-                            <table>
-                                <tr>
-                                    <th>총보유가치</th>
-                                    <th>평균매입단가(MV)</th>
-                                    <th>평균매입단가(FIFO)</th>
-                                </tr>
-                                <tr>
-                                    {% if target_asset.currency == 'USD' %}
-                                        <td>{{ my_equity_asset.total_amount|currency_usd }}</td>
-                                        <td>{{ my_equity_asset.average_purchase_price_mv|currency_usd }}</td>
-                                        <td>{{ my_equity_asset.average_purchase_price_fifo|currency_usd }}</td>
-                                    {% elif target_asset.currency == 'KRW' %}
-                                        <td>{{ my_equity_asset.total_amount|currency_krw }}</td>
-                                        <td>{{ my_equity_asset.average_purchase_price_mv|currency_krw }}</td>
-                                        <td>{{ my_equity_asset.average_purchase_price_fifo|currency_krw }}</td>
-                                    {% else %}
-                                        <td>{{ my_equity_asset.total_amount|intcomma }}</td>
-                                        <td>{{ my_equity_asset.average_purchase_price_mv|intcomma }}</td>
-                                        <td>{{ my_equity_asset.average_purchase_price_fifo|intcomma }}</td>
-                                    {% endif %}
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-
-            {% if my_portfolio_pk %}
-                {% if target_asset.asset_type == 'EQUITY' and my_equity_asset.asset_id != target_asset.pk %}
-                    <div>
-                        {% include 'equityapp/create.html' with asset=target_asset %}
-                    </div>
-                {% endif %}
+    <div style="margin: 2rem 2rem">
+        <div style="margin: 1rem auto;">
+            <a href="{% url 'assetmasterapp:list' %}" class="btn btn-light" style="display: inline">자산 목록</a>
+            <a href="{% url 'assetmasterapp:update' pk=target_asset.pk %}" class="btn btn-light" style="display: inline">수정하기</a>
+            <a href="{% url 'assetmasterapp:delete' pk=target_asset.pk %}" class="btn btn-light" style="display: inline">삭제하기</a>
+            {% if user.is_authenticated and my_portfolio_pk %}
+                <a href="{% url 'portfolioapp:detail' pk=my_portfolio_pk %}" class="btn btn-info" style="display: inline">My Portfolio</a>
             {% endif %}
         </div>
-    </div>
-
-    <div style="display: block;">
-        <h3 style=" color: #FFFFFF;">Transactions</h3>
-        <div style="display: block; width: 100%;">
-            <div style="display: block; width: 20%; float: left; margin-right: 0.5%;">
-                <div style="margin-bottom: 1rem;">
-                    {% include 'equitytransactionapp/create.html' with asset=target_asset %}
-                </div>
-
-                <div style="display: inline-block;">
-                    {% include 'equitytransactionapp/export_csv_template.html' %}
-                </div>
-
-                <div>
-                    {% include 'equitytransactionapp/import_csv.html' with asset=target_asset %}
-                </div>
+        <div style="display: inline-block; margin: 1rem auto;">
+            <div style="display: flex; float:left; width: 250px; height: 250px; margin-right: 2rem;
+                        align-items: center; justify-content: center; background-color: #FFFFFF;">
+                <img src="{{ target_asset.image.url }}" alt="" style="width: 90%;">
             </div>
-            <div style="display: inline-block; width: 79.5%;">
-{#                {% include 'equitytransactionapp/list.html' with equity_owned=target_equity_owned %}#}
+            <div style="display: inline-block;">
+                <div>
+                    <h3 style="display: inline-block; margin-right: 1rem; color:#FFFFFF">
+                        {{ target_asset.name }}
+                    </h3>
+                    <h5 style="display: inline; background-color: #264257; color:#FFFFFF">
+                        {{ target_asset.ticker }}
+                    </h5>
+                </div>
+
+                <div style="margin: 1rem 1rem;">
+                    <div>
+                        <table class="assetmasterapp_inverted_table">
+                            <tr class="assetmasterapp_inverted_table_tr">
+                                <th class="assetmasterapp_inverted_table_th">Market</th>
+                                <th class="assetmasterapp_inverted_table_th">Currency</th>
+                                <th class="assetmasterapp_inverted_table_th">현재가</th>
+                            </tr>
+                            <tr class="assetmasterapp_inverted_table_tr">
+                                <td class="assetmasterapp_inverted_table_td">{{ target_asset.market }}</td>
+                                <td class="assetmasterapp_inverted_table_td">{{ target_asset.currency }}</td>
+                                {% if target_asset.currency == 'USD' %}
+                                    <td class="assetmasterapp_inverted_table_td">{{ target_asset.current_price|currency_usd }}</td>
+                                {% elif target_asset.currency == 'KRW' %}
+                                    <td class="assetmasterapp_inverted_table_td">{{ target_asset.current_price|currency_krw }}</td>
+                                {% else %}
+                                    <td class="assetmasterapp_inverted_table_td">{{ target_asset.current_price|intcomma }}</td>
+                                {% endif %}
+                            </tr>
+                        </table>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        {% if my_equity_asset.asset_id == target_asset.pk %}
+                            <div>
+                                <div style="display: inline-block">
+                                    <table class="assetmasterapp_inverted_table">
+                                        <tr class="assetmasterapp_inverted_table_tr">
+                                            <th class="assetmasterapp_inverted_table_th">보유수량</th>
+                                            <th class="assetmasterapp_inverted_table_th">수익률(MV)</th>
+                                            <th class="assetmasterapp_inverted_table_th">수익률(FIFO)</th>
+                                        </tr>
+                                        <tr class="assetmasterapp_inverted_table_tr">
+                                            <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.quantity }}</td>
+                                            <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.rate_of_return_mv|percentage_rate_format }}</td>
+                                            <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.rate_of_return_fifo|percentage_rate_format }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div style="display: inline-block">
+                                    <table class="assetmasterapp_inverted_table">
+                                        <tr class="assetmasterapp_inverted_table_tr">
+                                            <th class="assetmasterapp_inverted_table_th">총보유가치</th>
+                                            <th class="assetmasterapp_inverted_table_th">평균매입단가(MV)</th>
+                                            <th class="assetmasterapp_inverted_table_th">평균매입단가(FIFO)</th>
+                                        </tr>
+                                        <tr class="assetmasterapp_inverted_table_tr">
+                                            {% if target_asset.currency == 'USD' %}
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.total_amount|currency_usd }}</td>
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.average_purchase_price_mv|currency_usd }}</td>
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.average_purchase_price_fifo|currency_usd }}</td>
+                                            {% elif target_asset.currency == 'KRW' %}
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.total_amount|currency_krw }}</td>
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.average_purchase_price_mv|currency_krw }}</td>
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.average_purchase_price_fifo|currency_krw }}</td>
+                                            {% else %}
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.total_amount|intcomma }}</td>
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.average_purchase_price_mv|intcomma }}</td>
+                                                <td class="assetmasterapp_inverted_table_td">{{ my_equity_asset.average_purchase_price_fifo|intcomma }}</td>
+                                            {% endif %}
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                {% if user.is_authenticated %}
+                    {% if my_portfolio_pk %}
+                        {% if target_asset.asset_type == 'EQUITY' and my_equity_asset.asset_id != target_asset.pk %}
+                            <div>
+                                {% include 'equityapp/create.html' with asset=target_asset %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
-    </div>
 
-</div>
+        {% if my_equity_asset %}
+            {% if user.is_authenticated %}
+                <div style="display: block;">
+                    <h3 style=" color: #FFFFFF;">Transactions</h3>
+                    <div style="display: block; width: 100%;">
+                        <div style="display: block; width: 20%; float: left; margin-right: 0.5%;">
+                            <div style="margin-bottom: 1rem;">
+                                {% include 'equitytransactionapp/create.html' with asset=target_asset %}
+                            </div>
+
+                            <div style="display: inline-block;">
+                                {% include 'equitytransactionapp/export_csv_template.html' with asset=target_asset %}
+                            </div>
+
+                            <div>
+                                {% include 'equitytransactionapp/import_csv.html' with asset=target_asset %}
+                            </div>
+                        </div>
+                        <div style="display: inline-block; width: 79.5%;">
+
+                            <div>
+                                <div style="display: block; width: 100%; ">
+                                    <h4 style="margin-left: 1rem; color: #FFFFFF;">Records</h4>
+                                </div>
+
+                                <div style="display: block; margin-left: 1%;">
+                                    <table class="transaction_record_table" style="width: 100%; color: #FFFFFF;">
+                                        <tr>
+                                            <th class="transaction_record_table_th_10p">거래일자</th>
+                                            <th class="transaction_record_table_th_5p">유형</th>
+                                            <th class="transaction_record_table_th_5p">수량</th>
+                                            <th class="transaction_record_table_th_10p">가격</th>
+                                            <th class="transaction_record_table_th_5p">제비용</th>
+                                            <th class="transaction_record_table_th_5p">제세금</th>
+                                            <th class="transaction_record_table_node_th">비고</th>
+                                            <th class="transaction_record_table_delete_th">삭제</th>
+                                        </tr>
+
+                                        {% if equity_transaction %}
+                                            {% with user_id=target_user_id %}
+                                                {% include 'equitytransactionapp/list.html' with transaction_list=equity_transaction %}
+                                            {% endwith %}
+                                        {% endif %}
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
 
 
 {% endblock %}

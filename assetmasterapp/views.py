@@ -13,6 +13,8 @@ from assetmasterapp.models import Asset
 from diamond_goose_mk5.settings import MEDIA_ROOT
 from equityapp.forms import EquityCreationForm
 from equityapp.models import Equity
+from equitytransactionapp.forms import EquityTransactionCreationForm
+from equitytransactionapp.models import EquityTransaction
 from portfolioapp.models import Portfolio
 
 
@@ -45,7 +47,7 @@ class AssetCreateView(CreateView):
 
 class AssetDetailView(DetailView, FormMixin):
     model = Asset
-    form_class = EquityCreationForm
+    form_class = EquityTransactionCreationForm
     context_object_name = 'target_asset'
     template_name = 'assetmasterapp/detail.html'
 
@@ -57,12 +59,20 @@ class AssetDetailView(DetailView, FormMixin):
         if my_portfolio_scalar_query:
             for my_portfolio in my_portfolio_scalar_query:
                 my_portfolio_pk = my_portfolio['id']
+                target_user_id = my_portfolio['owner_id']
                 context.update({'my_portfolio_pk': my_portfolio_pk})
+                context.update({'target_user_id': target_user_id})
 
             my_equity_scalar_query = Equity.objects.filter(portfolio=my_portfolio_pk, asset=self.object.pk).values()
             if my_equity_scalar_query:
                 for my_equity in my_equity_scalar_query:
-                    context.update({'my_equity_asset': my_equity})
+                    my_equity_pk = my_equity['id']
+                context.update({'my_equity_asset': my_equity})
+
+                # Equity Transactions
+                equity_transaction_query = EquityTransaction.objects.filter(equity=my_equity_pk).order_by('-transaction_date').values()
+                if equity_transaction_query:
+                    context.update({'equity_transaction': equity_transaction_query})
 
         return context
 

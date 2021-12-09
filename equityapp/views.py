@@ -31,7 +31,7 @@ class EquityCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('portfolioapp:detail',kwargs={'pk':self.object.portfolio.pk})
+        return reverse('assetmasterapp:detail',kwargs={'pk':self.object.asset.pk})
 
 
 @method_decorator(has_ownership,'get')

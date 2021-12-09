@@ -4,5 +4,6 @@
     <form action="{% url 'equitytransactionapp:export_csv_template' %}"  method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <button type="submit" class="btn btn-info btn-sm btn-block" >CSV Template</button>
+        <input type="hidden" name="asset_pk" value="{{ asset.pk }}">
     </form>
 </div>
