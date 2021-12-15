@@ -78,8 +78,28 @@ def import_csv(request):
             for db_frame in db_frame.itertuples():
 
                 # transaction_date input data make_aware
-                naive_datetime = datetime.datetime.strptime(db_frame.transaction_date, "%Y-%m-%d %H:%M:%S")
+                try:
+                    naive_datetime = datetime.datetime.strptime(db_frame.transaction_date, "%Y-%m-%d %H:%M:%S")
+                except Exception as datetime_format_exception1:
+                    print('datetime_format_exception1 : ', datetime_format_exception1)
+                    try:
+                        naive_datetime = datetime.datetime.strptime(db_frame.transaction_date, "%Y-%m-%d %H:%M")
+                    except Exception as datetime_format_exception2:
+                        print('datetime_format_exception2 : ', datetime_format_exception2)
+                        exit()
+
                 aware_datetime = make_aware(naive_datetime)
+
+                # import_transaction_data = [
+                #     str(db_frame.transaction_type),
+                #     str(db_frame.quantity),
+                #     str(db_frame.price),
+                #     str(db_frame.transaction_fee),
+                #     str(db_frame.transaction_tax),
+                #     str(aware_datetime),
+                #     str(db_frame.note),
+                # ]
+                # print(','.join(import_transaction_data))
 
                 obj = EquityTransaction.objects.create(
                     equity=Equity.objects.get(asset=asset_pk, portfolio=target_portfolio_pk),
