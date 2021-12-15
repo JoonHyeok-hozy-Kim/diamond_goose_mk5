@@ -8,7 +8,6 @@ import yfinance as yf
 
 ASSET_TYPES = (
     ('EQUITY','Equity'),
-    ('ETF','ETF(Equity Trade Fund)'),
     ('GUARDIAN','Guardian'),
     ('REITS','Reits'),
     ('PENSION','Pension'),

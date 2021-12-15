@@ -38,3 +38,4 @@ class EquityCreateView(CreateView):
 class EquityDetailView(DetailView):
     model = Equity
     template_name = 'equityapp/detail.html'
+

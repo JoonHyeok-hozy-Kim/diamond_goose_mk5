@@ -1,5 +1,6 @@
 from django import template
 from django.contrib.humanize.templatetags.humanize import intcomma
+from django.utils.text import Truncator
 
 register = template.Library()
 

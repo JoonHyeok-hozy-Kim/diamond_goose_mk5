@@ -104,10 +104,12 @@
 
                 {% if user.is_authenticated %}
                     {% if my_portfolio_pk %}
-                        {% if target_asset.asset_type == 'EQUITY' and my_equity_asset.asset_id != target_asset.pk %}
-                            <div>
-                                {% include 'equityapp/create.html' with asset=target_asset %}
-                            </div>
+                        {% if target_asset.asset_type == 'EQUITY' or target_asset.asset_type == 'GUARDIAN' %}
+                            {% if my_equity_asset.asset_id != target_asset.pk %}
+                                <div>
+                                    {% include 'equityapp/create.html' with asset=target_asset %}
+                                </div>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 {% endif %}
