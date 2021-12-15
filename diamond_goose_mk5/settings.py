@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'assetmasterapp',
     'equityapp',
     'equitytransactionapp',
+    'hozylabapp',
 ]
 
 MIDDLEWARE = [

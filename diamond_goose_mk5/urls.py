@@ -30,5 +30,6 @@ urlpatterns = [
     path('assetmaster/', include('assetmasterapp.urls')),
     path('equities/', include('equityapp.urls')),
     path('equitytransactions/', include('equitytransactionapp.urls')),
+    path('hozylab/', include('hozylabapp.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

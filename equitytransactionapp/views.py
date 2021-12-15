@@ -69,6 +69,7 @@ def import_csv(request):
             fs = FileSystemStorage(location=save_dir)
             file_name = fs.save(transaction_file.name, transaction_file)
             new_dir = 'equity_transaction_csv/' + file_name
+
             uploaded_file_url = fs.url(new_dir)
             excel_file = uploaded_file_url
             excel_transaction_data = pd.read_csv("."+excel_file, encoding='utf-8')

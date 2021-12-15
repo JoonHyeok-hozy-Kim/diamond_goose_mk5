@@ -7,38 +7,38 @@
 {% endblock %}
 
 {% for transaction in transaction_list %}
-    <tr>
-        <td class="transaction_record_table_td_10p">{{ transaction.transaction_date|date:"Y-m-d h:i:s" }}</td>
-        <td class="transaction_record_table_td_5p">{{ transaction.transaction_type }}</td>
-        <td class="transaction_record_table_td_5p">{{ transaction.quantity }}</td>
+        <tr>
+            <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_date|date:"Y-m-d h:i:s" }}</td>
+            <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_type }}</td>
+            <td style="background-color: #264257; text-align: center;">{{ transaction.quantity }}</td>
 
-        {% if target_currency == 'USD' %}
-            <td class="transaction_record_table_td_10p">{{ transaction.price|currency_usd }}</td>
-            <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|currency_usd  }}</td>
-            <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|currency_usd  }}</td>
-        {% elif target_currency == 'KRW' %}
-            <td class="transaction_record_table_td_10p">{{ transaction.price|currency_krw }}</td>
-            <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|currency_krw  }}</td>
-            <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|currency_krw  }}</td>
-        {% else %}
-            <td class="transaction_record_table_td_10p">{{ transaction.price|floatformat:2|intcomma }}</td>
-            <td class="transaction_record_table_td_5p">{{ transaction.transaction_fee|floatformat:2|intcomma  }}</td>
-            <td class="transaction_record_table_td_5p">{{ transaction.transaction_tax|floatformat:2|intcomma  }}</td>
-        {% endif %}
+            {% if target_currency == 'USD' %}
+                <td style="background-color: #264257; text-align: center;">{{ transaction.price|currency_usd }}</td>
+                <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_fee|currency_usd  }}</td>
+                <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_tax|currency_usd  }}</td>
+            {% elif target_currency == 'KRW' %}
+                <td style="background-color: #264257; text-align: center;">{{ transaction.price|currency_krw }}</td>
+                <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_fee|currency_krw  }}</td>
+                <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_tax|currency_krw  }}</td>
+            {% else %}
+                <td style="background-color: #264257; text-align: center;">{{ transaction.price|floatformat:2|intcomma }}</td>
+                <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_fee|floatformat:2|intcomma  }}</td>
+                <td style="background-color: #264257; text-align: center;">{{ transaction.transaction_tax|floatformat:2|intcomma  }}</td>
+            {% endif %}
 
-        {% if transaction.note %}
-            <td class="transaction_record_table_note_td">{{ transaction.note }}</td>
-        {% else %}
-            <td class="transaction_record_table_note_td"></td>
-        {% endif %}
+            {% if transaction.note %}
+                <td style="background-color: #264257; text-align: start;">{{ transaction.note }}</td>
+            {% else %}
+                <td style="background-color: #264257; text-align: start;"></td>
+            {% endif %}
 
-        {% if user_id == user.pk %}
-            <td class="transaction_record_table_delete_td">
-                <a href="{% url 'equitytransactionapp:delete' pk=transaction.id %}"
-                   style="color: #FA0067;text-decoration: none;">X</a>
-            </td>
-        {% else %}
-            <td class="transaction_record_table_delete_td"></td>
-        {% endif %}
-    </tr>
+            {% if user_id == user.pk %}
+                <td style="background-color: #264257; text-align: center;">
+                    <a href="{% url 'equitytransactionapp:delete' pk=transaction.id %}"
+                       style="color: #FA0067;text-decoration: none;">X</a>
+                </td>
+            {% else %}
+                <td style="background-color: #264257; text-align: center;"></td>
+            {% endif %}
+        </tr>
 {% endfor %}

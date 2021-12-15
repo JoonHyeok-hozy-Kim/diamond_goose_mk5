@@ -40,15 +40,19 @@
                 </a> |
                 <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="link-info" style="text-decoration-line: none;">
                     <span>Logout</span>
-                </a>
+                </a> |
             {% else %}
                 <a href="{% url 'accountapp:create' %}" class="link-info" style="text-decoration-line: none;">
                     <span>Sign Up</span>
                 </a> |
                 <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="link-info" style="text-decoration-line: none;">
                     <span>Login</span>
-                </a>
+                </a> |
             {% endif %}
+
+            <a href="{% url 'hozylabapp:lab_home' %}" class="link-info" style="text-decoration-line: none;">
+                <span>Hozy's Lab</span>
+            </a> |
 
         </div>
     </div>

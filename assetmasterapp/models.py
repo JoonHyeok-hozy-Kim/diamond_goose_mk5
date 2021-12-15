@@ -54,7 +54,8 @@ class Asset(models.Model):
                     result_current_price = round(today_ticker_data['Close'][0])
                 else:
                     result_current_price = round(today_ticker_data['Close'][0], 2)
-            except: None
+            except Exception as identifier:
+                print('[Exception] Asset Model, update_current_price : ', identifier)
 
         else:
             if self.asset_type == 'CRYPTO':

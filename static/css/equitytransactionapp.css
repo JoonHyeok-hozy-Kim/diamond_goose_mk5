@@ -5,68 +5,6 @@
     color: #FFFFFF
 }
 
-.transaction_record_table {
-    border-collapse: unset;
-    color:#FFFFFF;
-}
-
-.transaction_record_table_th_10p{
-    float: none;
-    border: 0.5px solid black;
-    width: 10%;
-    text-align: center;
-    background-color: #007D8A;
-}
-.transaction_record_table_td_10p{
-    float: none;
-    border: 0.5px solid black;
-    width: 10%;
-    text-align: center;
-    background-color: #264257;
-}
-.transaction_record_table_th_5p{
-    float: none;
-    border: 0.5px solid black;
-    width: 5%;
-    text-align: center;
-    background-color: #007D8A;
-}
-.transaction_record_table_td_5p{
-    float: none;
-    border: 0.5px solid black;
-    width: 5%;
-    text-align: center;
-    background-color: #264257;
-}
-.transaction_record_table_note_th{
-    float: none;
-    border: 0.5px solid black;
-    width: 15%;
-    text-align: center;
-    background-color: #007D8A;
-}
-.transaction_record_table_note_td{
-    float: none;
-    border: 0.5px solid black;
-    width: 15%;
-    text-align: start;
-    background-color: #264257;
-}
-.transaction_record_table_delete_th{
-    float: none;
-    border: 0.5px solid black;
-    width: 2%;
-    text-align: center;
-    background-color: #FA0067;
-}
-.transaction_record_table_delete_td{
-    float: none;
-    border: 0.5px solid black;
-    width: 2%;
-    text-align: center;
-    background-color: #264257;
-}
-
 
 .equitytransactionapp_inverted_table{
     border-collapse: collapse;
