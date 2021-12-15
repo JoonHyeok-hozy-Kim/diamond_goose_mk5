@@ -1,7 +1,7 @@
 {% load format_masks %}
 {% load format_masks2 %}
 
-{% for equity in portfolio.equity.all|dictsort:'asset.ticker' %}
+{% for equity in portfolio.equity.all|dictsort:'asset.ticker'|dictsort:'asset.asset_type' %}
     {% if equity.asset.asset_type == 'EQUITY' %}
         <tr style="background-color: #264257;">
     {% elif equity.asset.asset_type == 'GUARDIAN' %}
