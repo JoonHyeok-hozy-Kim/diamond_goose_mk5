@@ -7,11 +7,11 @@ import yfinance as yf
 # Create your models here.
 
 ASSET_TYPES = (
-    ('EQUITY','Equity'),
-    ('GUARDIAN','Guardian'),
-    ('REITS','Reits'),
-    ('PENSION','Pension'),
-    ('CRYPTO','Crypto Asset'),
+    ('EQUITY', 'Equity'),
+    ('GUARDIAN', 'Guardian'),
+    ('REITS', 'Reits'),
+    ('PENSION', 'Pension'),
+    ('CRYPTO', 'Crypto Asset'),
 )
 
 MARKET_CHOICES = (
