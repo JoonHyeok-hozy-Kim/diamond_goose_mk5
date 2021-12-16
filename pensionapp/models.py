@@ -25,3 +25,36 @@ class Pension(models.Model):
     risk_ratio_force_flag = models.BooleanField(default=False, null=False)
     risk_ratio = models.FloatField(default=0.7, null=True)
     current_risk_asset_ratio = models.FloatField(default=0, null=True)
+
+
+    def calculate_total_paid_amount(self):
+        pension_transaction_query = self.pension_transaction.all()
+        new_total_paid_amount = 0
+        for transaction in pension_transaction_query:
+            if transaction.transaction_type == 'PAY':
+                new_total_paid_amount += transaction.amount
+            else:
+                new_total_paid_amount -= transaction.amount
+
+        pension = Pension.objects.filter(pk=self.pk)
+        pension.update(total_paid_amount=new_total_paid_amount)
+
+
+PENSION_TRANSACTION_TYPES = (
+    ('PAY', '납입'),
+    ('RECEIVE', '수령'),
+)
+
+
+class PensionTransaction(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='pension_transaction')
+    pension = models.ForeignKey(Pension, on_delete=models.CASCADE, related_name='pension_transaction')
+
+    transaction_type = models.CharField(max_length=20, choices=PENSION_TRANSACTION_TYPES, null=False)
+    amount = models.FloatField(default=0, null=False)
+
+    transaction_date = models.DateTimeField(null=False)
+    creation_date = models.DateTimeField(auto_now=True)
+    last_update_date = models.DateTimeField(auto_now_add=True)
+
+

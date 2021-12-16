@@ -21,7 +21,7 @@
             {% for pension in pension_list %}
                 {% if pension.owner == user %}
                     <div style="color: #FFFFFF;">
-                        {% include 'pensionapp/pension_detail.html' with pension=pension %}
+                        {% include 'pensionapp/pension_list_detail.html' with pension=pension %}
                     </div>
                 <div style="display: block; height: 2rem;"></div>
                 {% endif %}
