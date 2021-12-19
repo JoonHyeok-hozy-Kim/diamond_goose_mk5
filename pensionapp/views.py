@@ -27,15 +27,15 @@ class PensionCreateView(CreateView):
         return reverse('pensionapp:pension_list')
 
 
-class PensionListView(ListView, FormMixin):
+class PensionListView(ListView):
     model = Pension
-    form_class = PensionTransactionCreationForm
     context_object_name = 'pension_list'
     template_name = 'pensionapp/pension_list.html'
 
 
-class PensionDetailView(DetailView):
+class PensionDetailView(DetailView, FormMixin):
     model = Pension
+    form_class = PensionTransactionCreationForm
     context_object_name = 'target_pension'
     template_name = 'pensionapp/pension_detail.html'
 
@@ -57,10 +57,11 @@ class PensionTransactionCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('pensionapp:pension_list')
+        return reverse('pensionapp:pension_detail',kwargs={'pk':self.request.POST['pension_pk']})
 
 
-class PensionTransactionDetailView(DetailView):
+class PensionTransactionDetailView(DetailView, FormMixin):
     model = PensionTransaction
+    form_class = PensionTransactionCreationForm
     template_name = 'pensionapp/pensiontransaction_detail.html'
 

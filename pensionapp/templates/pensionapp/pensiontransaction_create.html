@@ -6,9 +6,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/pensionapp.css' %}">
 {% endblock %}
 
-<div style="max-width: 500px; margin: 4rem auto">
+<div style="max-width: 500px; background-color: #264257;">
     <div>
-        <h4 style="background-color: #FFFFFF; color: #081321;">연금 납입/수령</h4>
+        <h5 style="color: #FFFFFF; font-weight: bold; text-decoration: underline;">연금 납입/수령</h5>
     </div>
     <div class="text-white">
         <form action="{% url 'pensionapp:pensiontransaction_create' %}" method="post">
@@ -16,7 +16,7 @@
 
             {% bootstrap_form form %}
 
-            <input type="submit" class="btn btn-light col-3">
+            <input type="submit" class="btn btn-light btn-sm">
             <input type="hidden" name="pension_pk" value={{ target_pension.pk }}>
         </form>
     </div>

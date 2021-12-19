@@ -7,6 +7,10 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/pensionapp.css' %}">
     {% endblock %}
 
+    <div style="margin: 1rem;">
+        <a href="{% url 'pensionapp:pension_list' %}" class="btn btn-light btn-sm">My Pensions</a>
+    </div>
+
     <div style="margin: 2rem;">
         <div style="color: #FFFFFF;">
             {% include 'pensionapp/pension_list_detail.html' with pension=target_pension %}
@@ -15,11 +19,11 @@
         <div style="display: block; height: 2rem;"></div>
     
         <div style="color:#FFFFFF;">
-            <div style="display: inline-block; border: 1px solid white; width: 40%;">
-                <h6>납입/수령</h6>
+            <div style="display: inline-block; width: 40%;">
+                {% include 'pensionapp/pensiontransaction_detail.html' with pension=target_pension %}
             </div>
             <div style="display: inline-block; border: 1px solid white; width: 50%;">
-                <h6>ETF 거래내역</h6>
+                Pension Asset Transaction Detail
             </div>
         </div>
     </div>
