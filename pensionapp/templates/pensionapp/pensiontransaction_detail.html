@@ -40,7 +40,10 @@
                         <td style="text-align: center;">{{ transaction.transaction_type }}</td>
                         <td style="text-align: end;">{{ transaction.amount|currency_krw }}</td>
                         <td style="text-align: center;">{{ transaction.transaction_date|date:"Y-m-d" }}</td>
-                        <td style="text-align: center;">X</td>
+                        <td style="text-align: center;">
+                            <a href="{% url 'pensionapp:pensiontransaction_delete' pk=transaction.pk %}"
+                               style="color: #FA0067;text-decoration: none;">X</a>
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

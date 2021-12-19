@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, DeleteView
 
 from dashboardapp.models import Dashboard
 from pensionapp.forms import PensionCreationForm, PensionTransactionCreationForm
@@ -65,3 +65,8 @@ class PensionTransactionDetailView(DetailView, FormMixin):
     form_class = PensionTransactionCreationForm
     template_name = 'pensionapp/pensiontransaction_detail.html'
 
+
+class PensionTransactionDeleteView(DeleteView):
+    model = PensionTransaction
+    context_object_name = 'target_pension_transaction'
+    template_name = 'pensionapp/pensiontransaction_delete.html'

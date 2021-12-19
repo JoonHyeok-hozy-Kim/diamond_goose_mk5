@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load currency_format %}
+
+{% block content %}
+
+    {% load static %}
+    {% block extrahead %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/pensionapp.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/equitytransactionapp.css' %}">
+    {% endblock %}
+
+    <div style="max-width: 500px; margin: 4rem auto">
+        <div style="margin: 2rem 0;">
+            <h4 class="pensionapp_main_title">Delete Pension Transaction</h4>
+            <h6 style="color: #FFFFFF;">Are you sure to delete this transaction?</h6>
+            <div style="display: block; min-height: 5rem; background-color: #264257;">
+                <table class="equitytransactionapp_inverted_table">
+                    <tr class="equitytransactionapp_inverted_table_tr">
+                        <th class="equitytransactionapp_inverted_table_th_td">거래일자</th>
+                        <th class="equitytransactionapp_inverted_table_th_td">유형</th>
+                        <th class="equitytransactionapp_inverted_table_th_td">금액</th>
+                    </tr>
+                    <tr class="equitytransactionapp_inverted_table_tr">
+                        <td class="equitytransactionapp_inverted_table_th_td">{{ target_pension_transaction.transaction_date|date:"Y.m.d h:i:s" }}</td>
+                        <td class="equitytransactionapp_inverted_table_th_td">{{ target_pension_transaction.transaction_type }}</td>
+                        <td class="equitytransactionapp_inverted_table_th_td">{{ target_pension_transaction.amount|currency_krw }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="text-white">
+            <form action="{% url 'pensionapp:pensiontransaction_delete' pk=target_pension_transaction.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-dark">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
